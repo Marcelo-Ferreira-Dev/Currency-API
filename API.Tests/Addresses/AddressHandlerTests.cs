@@ -1,6 +1,6 @@
 using API.Application.Addresses.Commands.CreateAddress;
-using API.Application.Addresses.Commands.UpdateAddress;
 using API.Application.Addresses.Commands.DeleteAddress;
+using API.Application.Addresses.Commands.UpdateAddress;
 using API.Application.Addresses.Queries.GetUserAddresses;
 using API.Data;
 using API.Entities;
@@ -26,8 +26,10 @@ public class AddressHandlerTests : IDisposable
     {
         var user = new User
         {
-            Name = "Marcelo Ferreira", Email = $"usuario{Guid.NewGuid():N}@example.com",
-            Password = "hash-de-prueba", IsActive = isActive
+            Name = "Marcelo Ferreira",
+            Email = $"usuario{Guid.NewGuid():N}@example.com",
+            Password = "hash-de-prueba",
+            IsActive = isActive
         };
         context.Users.Add(user);
         await context.SaveChangesAsync();
@@ -36,7 +38,10 @@ public class AddressHandlerTests : IDisposable
 
     private CreateAddressCommand Command(int userId) => new()
     {
-        UserId = userId, Street = " Av. Mariscal López 1234 ", City = " Asunción ", Country = " Paraguay "
+        UserId = userId,
+        Street = " Av. Mariscal López 1234 ",
+        City = " Asunción ",
+        Country = " Paraguay "
     };
 
     private CreateAddressCommandHandler CreateHandler() => new(context, new CreateAddressCommandValidator());
@@ -104,13 +109,18 @@ public class AddressHandlerTests : IDisposable
         var first = await CreateHandler().HandleAsync(Command(user.Id));
         await CreateHandler().HandleAsync(Command(user.Id));
         await CreateHandler().HandleAsync(Command(other.Id));
-        await DeleteHandler().HandleAsync(new() { Id = first.Value!.Id });
+        await DeleteHandler().HandleAsync(new()
+        {
+            Id = first.Value!.Id
+        });
 
         var result = await new GetUserAddressesQueryHandler(context).HandleAsync(new(user.Id, isActive));
         Assert.Equal(count, result.Value!.Count);
         Assert.All(result.Value, address => Assert.Equal(user.Id, address.UserId));
         if (isActive.HasValue)
+        {
             Assert.All(result.Value, address => Assert.Equal(isActive.Value, address.IsActive));
+        }
     }
 
     [Fact]
@@ -119,8 +129,14 @@ public class AddressHandlerTests : IDisposable
         var user = await UserAsync();
         var address = (await CreateHandler().HandleAsync(Command(user.Id))).Value!;
         var handler = DeleteHandler();
-        Assert.True((await handler.HandleAsync(new() { Id = address.Id })).Value);
-        Assert.True((await handler.HandleAsync(new() { Id = address.Id })).Value);
+        Assert.True((await handler.HandleAsync(new()
+        {
+            Id = address.Id
+        })).Value);
+        Assert.True((await handler.HandleAsync(new()
+        {
+            Id = address.Id
+        })).Value);
         context.ChangeTracker.Clear();
         Assert.False((await context.Addresses.SingleAsync()).IsActive);
         Assert.True((await context.Users.SingleAsync()).IsActive);
@@ -131,10 +147,20 @@ public class AddressHandlerTests : IDisposable
     {
         var user = await UserAsync();
         var address = (await CreateHandler().HandleAsync(Command(user.Id))).Value!;
-        await DeleteHandler().HandleAsync(new() { Id = address.Id });
+        await DeleteHandler().HandleAsync(new()
+        {
+            Id = address.Id
+        });
         var result = await new UpdateAddressCommandHandler(context, new UpdateAddressCommandValidator())
-            .HandleAsync(new() { Id = address.Id, Street = " Av. España 456 ", City = "Asunción",
-                Country = "Paraguay", ZipCode = " 1209 ", IsActive = true });
+            .HandleAsync(new()
+            {
+                Id = address.Id,
+                Street = " Av. España 456 ",
+                City = "Asunción",
+                Country = "Paraguay",
+                ZipCode = " 1209 ",
+                IsActive = true
+            });
         Assert.NotNull(result.Value);
         Assert.True(result.Value.IsActive);
         Assert.Equal(user.Id, result.Value.UserId);
@@ -146,9 +172,18 @@ public class AddressHandlerTests : IDisposable
     public async Task Update_and_delete_missing_address_return_not_found()
     {
         var update = await new UpdateAddressCommandHandler(context, new UpdateAddressCommandValidator())
-            .HandleAsync(new() { Id = 123, Street = "Av. España", City = "Asunción", Country = "Paraguay" });
+            .HandleAsync(new()
+            {
+                Id = 123,
+                Street = "Av. España",
+                City = "Asunción",
+                Country = "Paraguay"
+            });
         Assert.True(update.NotFound);
-        Assert.True((await DeleteHandler().HandleAsync(new() { Id = 123 })).NotFound);
+        Assert.True((await DeleteHandler().HandleAsync(new()
+        {
+            Id = 123
+        })).NotFound);
     }
 
     public void Dispose()

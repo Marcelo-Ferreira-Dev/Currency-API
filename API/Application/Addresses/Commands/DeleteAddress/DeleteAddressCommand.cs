@@ -1,7 +1,9 @@
-namespace API.Application.Addresses.Commands.DeleteAddress
+namespace API.Application.Addresses.Commands.DeleteAddress;
+
+public class DeleteAddressCommand
 {
-    public class DeleteAddressCommand
+    public int Id
     {
-        public int Id { get; set; }
+        get; set;
     }
 }

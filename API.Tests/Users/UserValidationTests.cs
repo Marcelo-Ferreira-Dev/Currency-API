@@ -1,6 +1,6 @@
 using API.Application.Users.Commands.CreateUser;
-using API.Application.Users.Commands.UpdateUser;
 using API.Application.Users.Commands.DeleteUser;
+using API.Application.Users.Commands.UpdateUser;
 using FluentValidation.TestHelper;
 
 namespace API.Tests.Users;
@@ -64,9 +64,13 @@ public class UserValidationTests
         command.Password = new string(character, count);
         var result = new CreateUserCommandValidator().TestValidate(command);
         if (valid)
+        {
             result.ShouldNotHaveValidationErrorFor(x => x.Password);
+        }
         else
+        {
             result.ShouldHaveValidationErrorFor(x => x.Password);
+        }
     }
 
     [Theory]
@@ -76,7 +80,10 @@ public class UserValidationTests
     {
         var command = new UpdateUserCommand
         {
-            Id = 1, Name = "Marcelo Ferreira", Email = "marcelod.ferreira.dev@gmail.com", IsActive = isActive
+            Id = 1,
+            Name = "Marcelo Ferreira",
+            Email = "marcelod.ferreira.dev@gmail.com",
+            IsActive = isActive
         };
         new UpdateUserCommandValidator().TestValidate(command).ShouldNotHaveAnyValidationErrors();
     }
@@ -86,7 +93,9 @@ public class UserValidationTests
     {
         var result = new UpdateUserCommandValidator().TestValidate(new UpdateUserCommand
         {
-            Id = 0, Name = " ", Email = "invalido"
+            Id = 0,
+            Name = " ",
+            Email = "invalido"
         });
         result.ShouldHaveValidationErrorFor(x => x.Id);
         result.ShouldHaveValidationErrorFor(x => x.Name);

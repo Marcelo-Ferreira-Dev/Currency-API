@@ -1,6 +1,8 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+
 namespace API.Application.Common;
+
 public static class DatabaseErrors
 {
     public static bool IsUniqueViolation(DbUpdateException exception) =>

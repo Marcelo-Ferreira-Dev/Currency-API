@@ -1,6 +1,6 @@
 using API.Application.Addresses.Commands.CreateAddress;
-using API.Application.Addresses.Commands.UpdateAddress;
 using API.Application.Addresses.Commands.DeleteAddress;
+using API.Application.Addresses.Commands.UpdateAddress;
 using FluentValidation.TestHelper;
 
 namespace API.Tests.Addresses;
@@ -14,8 +14,11 @@ public class AddressValidationTests
     {
         var command = new CreateAddressCommand
         {
-            UserId = 1, Street = "Av. Mariscal López 1234", City = "Asunción",
-            Country = "Paraguay", ZipCode = zipCode
+            UserId = 1,
+            Street = "Av. Mariscal López 1234",
+            City = "Asunción",
+            Country = "Paraguay",
+            ZipCode = zipCode
         };
         new CreateAddressCommandValidator().TestValidate(command).ShouldNotHaveAnyValidationErrors();
     }
@@ -28,7 +31,10 @@ public class AddressValidationTests
     {
         var result = new CreateAddressCommandValidator().TestValidate(new CreateAddressCommand
         {
-            UserId = 1, Street = value!, City = value!, Country = value!
+            UserId = 1,
+            Street = value!,
+            City = value!,
+            Country = value!
         });
         result.ShouldHaveValidationErrorFor(x => x.Street);
         result.ShouldHaveValidationErrorFor(x => x.City);
@@ -42,7 +48,10 @@ public class AddressValidationTests
     {
         new CreateAddressCommandValidator().TestValidate(new CreateAddressCommand
         {
-            UserId = id, Street = "Av. Mariscal López", City = "Asunción", Country = "Paraguay"
+            UserId = id,
+            Street = "Av. Mariscal López",
+            City = "Asunción",
+            Country = "Paraguay"
         }).ShouldHaveValidationErrorFor(x => x.UserId);
     }
 
@@ -53,7 +62,11 @@ public class AddressValidationTests
     {
         new UpdateAddressCommandValidator().TestValidate(new UpdateAddressCommand
         {
-            Id = 1, Street = "Av. España 456", City = "Asunción", Country = "Paraguay", IsActive = isActive
+            Id = 1,
+            Street = "Av. España 456",
+            City = "Asunción",
+            Country = "Paraguay",
+            IsActive = isActive
         }).ShouldNotHaveAnyValidationErrors();
     }
 
@@ -62,7 +75,10 @@ public class AddressValidationTests
     {
         var result = new UpdateAddressCommandValidator().TestValidate(new UpdateAddressCommand
         {
-            Id = 0, Street = "", City = " ", Country = null!
+            Id = 0,
+            Street = "",
+            City = " ",
+            Country = null!
         });
         result.ShouldHaveValidationErrorFor(x => x.Id);
         result.ShouldHaveValidationErrorFor(x => x.Street);

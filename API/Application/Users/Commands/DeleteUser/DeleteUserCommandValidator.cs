@@ -1,13 +1,12 @@
 using FluentValidation;
 
-namespace API.Application.Users.Commands.DeleteUser
+namespace API.Application.Users.Commands.DeleteUser;
+
+public class DeleteUserCommandValidator : AbstractValidator<DeleteUserCommand>
 {
-    public class DeleteUserCommandValidator : AbstractValidator<DeleteUserCommand>
+    public DeleteUserCommandValidator()
     {
-        public DeleteUserCommandValidator()
-        {
-            RuleFor(command => command.Id)
-                .GreaterThan(0);
-        }
+        RuleFor(command => command.Id)
+            .GreaterThan(0);
     }
 }

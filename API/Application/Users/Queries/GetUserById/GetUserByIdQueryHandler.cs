@@ -1,8 +1,9 @@
-using API.Data;
 using API.Contracts;
-using API.Application.Common;
+using API.Data;
 using Microsoft.EntityFrameworkCore;
+
 namespace API.Application.Users.Queries.GetUserById;
+
 public class GetUserByIdQueryHandler(AppDbContext context)
 {
     public async Task<UserResponse?> HandleAsync(GetUserByIdQuery query, CancellationToken ct = default)

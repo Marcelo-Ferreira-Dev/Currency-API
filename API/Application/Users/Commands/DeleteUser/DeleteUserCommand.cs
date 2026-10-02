@@ -1,7 +1,9 @@
-namespace API.Application.Users.Commands.DeleteUser
+namespace API.Application.Users.Commands.DeleteUser;
+
+public class DeleteUserCommand
 {
-    public class DeleteUserCommand
+    public int Id
     {
-        public int Id { get; set; }
+        get; set;
     }
 }

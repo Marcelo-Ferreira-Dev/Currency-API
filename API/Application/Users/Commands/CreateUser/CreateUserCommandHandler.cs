@@ -12,11 +12,15 @@ public class CreateUserCommandHandler(AppDbContext context, IValidator<CreateUse
     {
         var validation = await validator.ValidateAsync(command, ct);
         if (!validation.IsValid)
+        {
             return new(null, validation.ToDictionary());
+        }
 
         var email = command.Email.Trim().ToLowerInvariant();
         if (await context.Users.AnyAsync(user => user.Email == email, ct))
+        {
             return new(null, null, true);
+        }
 
         var user = new User
         {

@@ -205,6 +205,128 @@
           }
         }
       ]
+    },
+    {
+      "name": "Currencies",
+      "item": [
+        {
+          "name": "Crear PYG",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/currencies",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"PYG\",\n  \"name\": \"Guaraní\",\n  \"rateToBase\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Crear USD",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/currencies",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"USD\",\n  \"name\": \"Dólar estadounidense\",\n  \"rateToBase\": 6000\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Listar monedas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/currencies"
+          }
+        },
+        {
+          "name": "Listar monedas activas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/currencies?isActive=true"
+          }
+        },
+        {
+          "name": "Listar monedas inactivas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/currencies?isActive=false"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Conversion",
+      "item": [
+        {
+          "name": "Convertir USD a PYG",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/currency/convert",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fromCurrencyCode\": \"USD\",\n  \"toCurrencyCode\": \"PYG\",\n  \"amount\": 100\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Convertir PYG a USD",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/currency/convert",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fromCurrencyCode\": \"PYG\",\n  \"toCurrencyCode\": \"USD\",\n  \"amount\": 600000\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
     }
   ]
 }

@@ -5,6 +5,7 @@
 
 # dotenv files
 .env
+.editorconfig
 
 # Base SQLite local y archivos auxiliares
 *.sqlite

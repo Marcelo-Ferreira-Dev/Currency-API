@@ -1,19 +1,18 @@
 using FluentValidation;
 
-namespace API.Application.Users.Commands.UpdateUser
+namespace API.Application.Users.Commands.UpdateUser;
+
+public class UpdateUserCommandValidator : AbstractValidator<UpdateUserCommand>
 {
-    public class UpdateUserCommandValidator : AbstractValidator<UpdateUserCommand>
+    public UpdateUserCommandValidator()
     {
-        public UpdateUserCommandValidator()
-        {
-            RuleFor(command => command.Id)
-                .GreaterThan(0);
+        RuleFor(command => command.Id)
+            .GreaterThan(0);
 
-            RuleFor(command => command.Name)
-                .NotEmpty();
+        RuleFor(command => command.Name)
+            .NotEmpty();
 
-            RuleFor(command => command.Email)
-                .NotEmpty().EmailAddress();
-        }
+        RuleFor(command => command.Email)
+            .NotEmpty().EmailAddress();
     }
 }

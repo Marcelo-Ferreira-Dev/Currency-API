@@ -1,6 +1,6 @@
 using API.Application.Users.Commands.DeleteUser;
-using API.Application.Users.Queries.GetUsers;
 using API.Application.Users.Queries.GetUserById;
+using API.Application.Users.Queries.GetUsers;
 using API.Data;
 using API.Entities;
 using Microsoft.Data.Sqlite;
@@ -26,8 +26,10 @@ public class UserSoftDeleteTests : IDisposable
     {
         var user = new User
         {
-            Name = "Marcelo Ferreira", Email = "marcelod.ferreira.dev@gmail.com",
-            Password = "hash-de-prueba", IsActive = isActive
+            Name = "Marcelo Ferreira",
+            Email = "marcelod.ferreira.dev@gmail.com",
+            Password = "hash-de-prueba",
+            IsActive = isActive
         };
         context.Users.Add(user);
         await context.SaveChangesAsync();
@@ -43,7 +45,10 @@ public class UserSoftDeleteTests : IDisposable
         var user = await CreateUserAsync();
         context.Addresses.Add(new Address
         {
-            UserId = user.Id, Street = "Av. Mariscal López", City = "Asunción", Country = "Paraguay"
+            UserId = user.Id,
+            Street = "Av. Mariscal López",
+            City = "Asunción",
+            Country = "Paraguay"
         });
         await context.SaveChangesAsync();
 
