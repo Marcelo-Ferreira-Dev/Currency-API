@@ -28,14 +28,21 @@ dotnet run --launch-profile http
 | GET | `/users/{id}` |
 | PUT | `/users/{id}` |
 | DELETE | `/users/{id}` |
+| POST | `/users/{userId}/addresses` |
+| GET | `/users/{userId}/addresses?isActive=true` (filtro opcional) |
+| PUT | `/addresses/{id}` |
+| DELETE | `/addresses/{id}` |
+
+DELETE desactiva usuarios y direcciones con `IsActive = false`. Los listados incluyen activos e inactivos; PUT permite reactivarlos. Las monedas incluyen `IsActive`, con valor predeterminado `true`.
 
 ## Postman
 
 Importar `postman/API.postman_collection.json`. La variable `baseUrl` usa `http://localhost:5018`.
+Los requests de creación guardan `userId` y `addressId` para las demás operaciones.
 
 
 
-## Pruebas unitarias
+## Pruebas
 
 Desde la raíz:
 
@@ -43,4 +50,3 @@ Desde la raíz:
 dotnet test API.Tests/API.Tests.csproj
 ```
 
-Validación de creación, actualización y eliminación, incluyendo el límite de contraseña en bytes UTF-8.

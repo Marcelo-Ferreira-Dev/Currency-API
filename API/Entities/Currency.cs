@@ -6,4 +6,5 @@ public class Currency
     public required string Code { get; set; }
     public required string Name { get; set; }
     public required decimal RateToBase { get; set; }
+    public bool IsActive { get; set; } = true;
 }

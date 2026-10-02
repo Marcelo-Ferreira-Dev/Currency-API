@@ -29,6 +29,14 @@ public class AppDbContext : DbContext
             .HasIndex(currency => currency.Code)
             .IsUnique();
 
+        modelBuilder.Entity<Currency>()
+            .Property(currency => currency.IsActive)
+            .HasDefaultValue(true);
+
+        modelBuilder.Entity<Address>()
+            .Property(address => address.IsActive)
+            .HasDefaultValue(true);
+
         modelBuilder.Entity<Address>()
             .HasOne(address => address.User)
             .WithMany(user => user.Addresses)

@@ -11,97 +11,200 @@
     {
       "key": "userId",
       "value": "1"
+    },
+    {
+      "key": "addressId",
+      "value": "1"
     }
   ],
   "item": [
     {
-      "name": "Crear usuario",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
+      "name": "Users",
+      "item": [
+        {
+          "name": "Crear usuario",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/users",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Marcelo Ferreira\",\n  \"email\": \"marcelod.ferreira.dev@gmail.com\",\n  \"password\": \"P@sswordsegura\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "  pm.collectionVariables.set(\"userId\", pm.response.json().id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Listar usuarios",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/users"
           }
-        ],
-        "url": "{{baseUrl}}/users",
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"name\": \"Marcelo Ferreira\",\n  \"email\": \"marcelod.ferreira.dev@gmail.com\",\n  \"password\": \"P@sswordsegura\"\n}",
-          "options": {
-            "raw": {
-              "language": "json"
+        },
+        {
+          "name": "Listar usuarios activos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/users?isActive=true"
+          }
+        },
+        {
+          "name": "Obtener usuario",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/users/{{userId}}"
+          }
+        },
+        {
+          "name": "Actualizar usuario",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/users/{{userId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Marcelo Daniel Ferreira\",\n  \"email\": \"marcelod.ferreira.dev@gmail.com\",\n  \"isActive\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             }
           }
-        }
-      },
-      "event": [
+        },
         {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "exec": [
-              "if (pm.response.code === 201) {",
-              "  pm.collectionVariables.set(\"userId\", pm.response.json().id);",
-              "}"
-            ]
+          "name": "Eliminar usuario",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/users/{{userId}}"
           }
         }
       ]
     },
     {
-      "name": "Listar usuarios",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": "{{baseUrl}}/users"
-      }
-    },
-    {
-      "name": "Listar usuarios activos",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": "{{baseUrl}}/users?isActive=true"
-      }
-    },
-    {
-      "name": "Obtener usuario",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": "{{baseUrl}}/users/{{userId}}"
-      }
-    },
-    {
-      "name": "Actualizar usuario",
-      "request": {
-        "method": "PUT",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
+      "name": "Addresses",
+      "item": [
+        {
+          "name": "Crear dirección",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/users/{{userId}}/addresses",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"street\": \"Av. Mariscal López 1234\",\n  \"city\": \"Asunción\",\n  \"country\": \"Paraguay\",\n  \"zipCode\": \"1209\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "  pm.collectionVariables.set(\"addressId\", pm.response.json().id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Listar direcciones",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/users/{{userId}}/addresses"
           }
-        ],
-        "url": "{{baseUrl}}/users/{{userId}}",
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"name\": \"Marcelo Daniel Ferreira\",\n  \"email\": \"marcelod.ferreira.dev@gmail.com\",\n  \"isActive\": true\n}",
-          "options": {
-            "raw": {
-              "language": "json"
+        },
+        {
+          "name": "Listar direcciones activas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/users/{{userId}}/addresses?isActive=true"
+          }
+        },
+        {
+          "name": "Listar direcciones inactivas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/users/{{userId}}/addresses?isActive=false"
+          }
+        },
+        {
+          "name": "Actualizar dirección",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/addresses/{{addressId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"street\": \"Av. España 456\",\n  \"city\": \"Asunción\",\n  \"country\": \"Paraguay\",\n  \"zipCode\": \"1209\",\n  \"isActive\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             }
           }
+        },
+        {
+          "name": "Eliminar dirección",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/addresses/{{addressId}}"
+          }
         }
-      }
-    },
-    {
-      "name": "Eliminar usuario",
-      "request": {
-        "method": "DELETE",
-        "header": [],
-        "url": "{{baseUrl}}/users/{{userId}}"
-      }
+      ]
     }
   ]
 }
