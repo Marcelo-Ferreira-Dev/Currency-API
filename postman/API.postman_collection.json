@@ -1,0 +1,107 @@
+{
+  "info": {
+    "name": "Prueba Técnica API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5018"
+    },
+    {
+      "key": "userId",
+      "value": "1"
+    }
+  ],
+  "item": [
+    {
+      "name": "Crear usuario",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/users",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Marcelo Ferreira\",\n  \"email\": \"marcelod.ferreira.dev@gmail.com\",\n  \"password\": \"P@sswordsegura\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (pm.response.code === 201) {",
+              "  pm.collectionVariables.set(\"userId\", pm.response.json().id);",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Listar usuarios",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/users"
+      }
+    },
+    {
+      "name": "Listar usuarios activos",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/users?isActive=true"
+      }
+    },
+    {
+      "name": "Obtener usuario",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/users/{{userId}}"
+      }
+    },
+    {
+      "name": "Actualizar usuario",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/users/{{userId}}",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Marcelo Daniel Ferreira\",\n  \"email\": \"marcelod.ferreira.dev@gmail.com\",\n  \"isActive\": true\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Eliminar usuario",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": "{{baseUrl}}/users/{{userId}}"
+      }
+    }
+  ]
+}
