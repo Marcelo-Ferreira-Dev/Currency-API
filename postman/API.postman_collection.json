@@ -15,6 +15,10 @@
     {
       "key": "addressId",
       "value": "1"
+    },
+    {
+      "key": "apiKey",
+      "value": "API-KEY-prueba"
     }
   ],
   "item": [
@@ -328,5 +332,25 @@
         }
       ]
     }
-  ]
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-API-KEY",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  }
 }

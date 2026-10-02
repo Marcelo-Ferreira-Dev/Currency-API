@@ -44,10 +44,29 @@ Conversión: importe positivo y monedas existentes y activas. Fórmula: `amount 
 
 `RateToBase` expresa el valor de una unidad en la moneda base; los ejemplos usan PYG con tasa 1 y USD con tasa 6000. Las tasas son de prueba y no se consultan cotizaciones externas.
 
+## API Key
+
+Clave de prueba configurada en `appsettings.json`: `API-KEY-prueba`.
+Headers para GET y DELETE:
+
+```http
+X-API-KEY: API-KEY-prueba
+```
+
+Clave ausente o incorrecta devuelve `401`.
+
+Headers para POST y PUT con cuerpo JSON:
+
+```http
+X-API-KEY: API-KEY-prueba
+Content-Type: application/json
+```
+
 ## Postman
 
 Importar `postman/API.postman_collection.json`. La variable `baseUrl` usa `http://localhost:5018`.
 Los requests de creación guardan `userId` y `addressId` para las demás operaciones.
+La colección usa autenticación API Key con la variable `apiKey`, heredada por todos los requests.
 
 ## Pruebas
 

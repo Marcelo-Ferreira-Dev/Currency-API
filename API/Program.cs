@@ -12,6 +12,7 @@ using API.Application.Users.Queries.GetUserById;
 using API.Application.Users.Queries.GetUsers;
 using API.Data;
 using API.Endpoints;
+using API.Middleware;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
@@ -35,6 +36,8 @@ builder.Services.AddScoped<GetCurrenciesQueryHandler>();
 builder.Services.AddScoped<ConvertCurrencyCommandHandler>();
 
 var app = builder.Build();
+
+app.UseMiddleware<ApiKeyMiddleware>();
 
 app.MapGet("/", () => "Hello World!");
 app.MapUserEndpoints();
