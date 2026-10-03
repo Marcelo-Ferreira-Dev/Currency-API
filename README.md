@@ -7,6 +7,7 @@
 - dotnet-ef 10.0.12.
 - FluentValidation 12.1.1.
 - BCrypt.Net-Next 4.2.0.
+- Swashbuckle.AspNetCore 10.2.3.
 
 ## Ejecutar
 
@@ -38,6 +39,8 @@ dotnet run --launch-profile http
 
 DELETE desactiva usuarios y direcciones con `IsActive = false`. Los listados incluyen activos e inactivos; PUT permite reactivarlos. Las monedas incluyen `IsActive`, con valor predeterminado `true`.
 
+En PUT de usuarios y direcciones, `isActive` solo se actualiza si se envía `true` o `false`; omitido o `null` conserva el estado existente. Los demás campos obligatorios siguen siendo requeridos.
+
 Monedas: código y nombre obligatorios, código único y tasa positiva. `isActive` es opcional al crear y vale `true` por defecto. Los códigos se guardan en mayúsculas.
 
 Conversión: importe positivo y monedas existentes y activas. Fórmula: `amount * from.RateToBase / to.RateToBase`, usando `decimal`. Moneda inexistente devuelve `404`, inactiva `409` y desbordamiento `400`.
@@ -61,6 +64,12 @@ Headers para POST y PUT con cuerpo JSON:
 X-API-KEY: API-KEY-prueba
 Content-Type: application/json
 ```
+
+## Swagger
+
+En Development: `http://localhost:5018/swagger`.
+Usar **Authorize** e ingresar `API-KEY-prueba` para ejecutar los endpoints.
+La documentación es pública en desarrollo;
 
 ## Postman
 

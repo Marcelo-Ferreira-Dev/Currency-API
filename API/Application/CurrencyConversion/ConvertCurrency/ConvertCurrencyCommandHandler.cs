@@ -18,8 +18,11 @@ public class ConvertCurrencyCommandHandler(AppDbContext context, IValidator<Conv
 
         var fromCode = command.FromCurrencyCode.Trim().ToUpperInvariant();
         var toCode = command.ToCurrencyCode.Trim().ToUpperInvariant();
-        var from = await context.Currencies.AsNoTracking().SingleOrDefaultAsync(c => c.Code == fromCode, ct);
-        var to = await context.Currencies.AsNoTracking().SingleOrDefaultAsync(c => c.Code == toCode, ct);
+        var currencies = await context.Currencies.AsNoTracking()
+            .Where(currency => currency.Code == fromCode || currency.Code == toCode)
+            .ToListAsync(ct);
+        var from = currencies.SingleOrDefault(currency => currency.Code == fromCode);
+        var to = currencies.SingleOrDefault(currency => currency.Code == toCode);
         if (from is null || to is null)
         {
             return new(NotFound: true);

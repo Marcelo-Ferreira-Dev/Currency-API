@@ -30,7 +30,10 @@ public class UpdateUserCommandHandler(AppDbContext context, IValidator<UpdateUse
 
         user.Name = command.Name.Trim();
         user.Email = email;
-        user.IsActive = command.IsActive;
+        if (command.IsActive.HasValue)
+        {
+            user.IsActive = command.IsActive.Value;
+        }
         try
         {
             await context.SaveChangesAsync(ct);

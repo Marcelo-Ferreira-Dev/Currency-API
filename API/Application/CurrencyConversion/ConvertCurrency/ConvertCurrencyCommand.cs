@@ -6,8 +6,5 @@ public class ConvertCurrencyCommand
 
     public string ToCurrencyCode { get; set; } = string.Empty;
 
-    public decimal Amount
-    {
-        get; set;
-    }
+    public decimal Amount { get; set; }
 }

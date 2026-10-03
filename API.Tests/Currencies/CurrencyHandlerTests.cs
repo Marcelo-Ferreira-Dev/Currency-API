@@ -169,6 +169,21 @@ public class CurrencyHandlerTests : IDisposable
         Assert.Contains("amount", result.Errors.Keys);
     }
 
+    [Fact]
+    public async Task Convert_same_currency_returns_original_amount()
+    {
+        await SeedAsync();
+        var result = await ConvertHandler().HandleAsync(new()
+        {
+            FromCurrencyCode = "USD",
+            ToCurrencyCode = "usd",
+            Amount = 123.45m
+        });
+
+        Assert.NotNull(result.Value);
+        Assert.Equal(123.45m, result.Value.ConvertedAmount);
+    }
+
     public void Dispose()
     {
         context.Dispose();

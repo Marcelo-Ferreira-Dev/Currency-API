@@ -25,7 +25,10 @@ public class UpdateAddressCommandHandler(AppDbContext context, IValidator<Update
         address.City = command.City.Trim();
         address.Country = command.Country.Trim();
         address.ZipCode = command.ZipCode?.Trim();
-        address.IsActive = command.IsActive;
+        if (command.IsActive.HasValue)
+        {
+            address.IsActive = command.IsActive.Value;
+        }
         await context.SaveChangesAsync(ct);
         return new(new(address.Id, address.UserId, address.Street, address.City, address.Country, address.ZipCode, address.IsActive));
     }

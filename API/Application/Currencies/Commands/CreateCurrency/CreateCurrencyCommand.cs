@@ -6,9 +6,6 @@ public class CreateCurrencyCommand
 
     public string Name { get; set; } = string.Empty;
 
-    public decimal RateToBase
-    {
-        get; set;
-    }
+    public decimal RateToBase { get; set; }
     public bool IsActive { get; set; } = true;
 }

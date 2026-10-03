@@ -3,10 +3,7 @@ namespace API.Application.Addresses.Commands.CreateAddress;
 public class CreateAddressCommand
 {
     [System.Text.Json.Serialization.JsonIgnore]
-    public int UserId
-    {
-        get; set;
-    }
+    public int UserId { get; set; }
 
     public string Street { get; set; } = string.Empty;
 
@@ -14,8 +11,5 @@ public class CreateAddressCommand
 
     public string Country { get; set; } = string.Empty;
 
-    public string? ZipCode
-    {
-        get; set;
-    }
+    public string? ZipCode { get; set; }
 }
