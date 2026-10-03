@@ -1,0 +1,356 @@
+{
+  "info": {
+    "name": "Prueba Técnica API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5018"
+    },
+    {
+      "key": "userId",
+      "value": "1"
+    },
+    {
+      "key": "addressId",
+      "value": "1"
+    },
+    {
+      "key": "apiKey",
+      "value": "API-KEY-prueba"
+    }
+  ],
+  "item": [
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Crear usuario",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/users",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Marcelo Ferreira\",\n  \"email\": \"marcelod.ferreira.dev@gmail.com\",\n  \"password\": \"P@sswordsegura\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "  pm.collectionVariables.set(\"userId\", pm.response.json().id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Listar usuarios",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/users"
+          }
+        },
+        {
+          "name": "Listar usuarios activos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/users?isActive=true"
+          }
+        },
+        {
+          "name": "Obtener usuario",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/users/{{userId}}"
+          }
+        },
+        {
+          "name": "Actualizar usuario",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/users/{{userId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Marcelo Daniel Ferreira\",\n  \"email\": \"marcelod.ferreira.dev@gmail.com\",\n  \"isActive\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Eliminar usuario",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/users/{{userId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Addresses",
+      "item": [
+        {
+          "name": "Crear dirección",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/users/{{userId}}/addresses",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"street\": \"Av. Mariscal López 1234\",\n  \"city\": \"Asunción\",\n  \"country\": \"Paraguay\",\n  \"zipCode\": \"1209\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "  pm.collectionVariables.set(\"addressId\", pm.response.json().id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Listar direcciones",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/users/{{userId}}/addresses"
+          }
+        },
+        {
+          "name": "Listar direcciones activas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/users/{{userId}}/addresses?isActive=true"
+          }
+        },
+        {
+          "name": "Listar direcciones inactivas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/users/{{userId}}/addresses?isActive=false"
+          }
+        },
+        {
+          "name": "Actualizar dirección",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/addresses/{{addressId}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"street\": \"Av. España 456\",\n  \"city\": \"Asunción\",\n  \"country\": \"Paraguay\",\n  \"zipCode\": \"1209\",\n  \"isActive\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Eliminar dirección",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/addresses/{{addressId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Currencies",
+      "item": [
+        {
+          "name": "Crear PYG",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/currencies",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"PYG\",\n  \"name\": \"Guaraní\",\n  \"rateToBase\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Crear USD",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/currencies",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"USD\",\n  \"name\": \"Dólar estadounidense\",\n  \"rateToBase\": 6000\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Listar monedas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/currencies"
+          }
+        },
+        {
+          "name": "Listar monedas activas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/currencies?isActive=true"
+          }
+        },
+        {
+          "name": "Listar monedas inactivas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/currencies?isActive=false"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Conversion",
+      "item": [
+        {
+          "name": "Convertir USD a PYG",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/currency/convert",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fromCurrencyCode\": \"USD\",\n  \"toCurrencyCode\": \"PYG\",\n  \"amount\": 100\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Convertir PYG a USD",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/currency/convert",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fromCurrencyCode\": \"PYG\",\n  \"toCurrencyCode\": \"USD\",\n  \"amount\": 600000\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-API-KEY",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  }
+}

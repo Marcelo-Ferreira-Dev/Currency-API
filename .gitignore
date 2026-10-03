@@ -5,6 +5,13 @@
 
 # dotenv files
 .env
+.editorconfig
+
+# Base SQLite local y archivos auxiliares
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+*.sqlite-journal
 
 # User-specific files
 *.rsuser

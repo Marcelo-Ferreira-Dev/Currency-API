@@ -1,0 +1,35 @@
+using API.Application.Common;
+using API.Contracts;
+using API.Data;
+using FluentValidation;
+
+namespace API.Application.Addresses.Commands.UpdateAddress;
+
+public class UpdateAddressCommandHandler(AppDbContext context, IValidator<UpdateAddressCommand> validator)
+{
+    public async Task<OperationResult<AddressResponse>> HandleAsync(UpdateAddressCommand command, CancellationToken ct = default)
+    {
+        var validation = await validator.ValidateAsync(command, ct);
+        if (!validation.IsValid)
+        {
+            return new(Errors: validation.ToDictionary());
+        }
+
+        var address = await context.Addresses.FindAsync([command.Id], ct);
+        if (address is null)
+        {
+            return new(NotFound: true);
+        }
+
+        address.Street = command.Street.Trim();
+        address.City = command.City.Trim();
+        address.Country = command.Country.Trim();
+        address.ZipCode = command.ZipCode?.Trim();
+        if (command.IsActive.HasValue)
+        {
+            address.IsActive = command.IsActive.Value;
+        }
+        await context.SaveChangesAsync(ct);
+        return new(new(address.Id, address.UserId, address.Street, address.City, address.Country, address.ZipCode, address.IsActive));
+    }
+}
